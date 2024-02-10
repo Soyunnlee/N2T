@@ -149,15 +149,28 @@ class Notion2Tistory:
 
         resp_post = self.t_client.posting(title=title,
                                           content=content,
-                                          visibility=3,
+                                          visibility=0,
                                           category=category_id,
                                           tag=tags,
                                           modify_id=page[1])
         print(f'posting 완료... [{filepath.split("/")[-1]}]')
+        
 
         # notion 속성값 반영
         page[0].set_property(cfg.NOTION.COLUMN.STATUS, cfg.NOTION.POST.COMPLETE_VALUE)
+        # 주석
         page[0].set_property(cfg.NOTION.COLUMN.URL, BeautifulSoup(resp_post.text, 'lxml').find('url').text)
+        
+        # 수정
+        # try:
+        #     url_text = BeautifulSoup(resp_post.text, 'lxml').find('url').text
+        # except AttributeError:
+        #     url_text = None
+
+        # page[0].set_property(cfg.NOTION.COLUMN.URL, url_text)
+
+
+
 
 
 if __name__ == '__main__':

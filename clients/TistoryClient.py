@@ -156,7 +156,13 @@ class TistoryClient:
 
         resp = requests.post(url, data=data, files=files)
         soup = BeautifulSoup(resp.text, 'html.parser')
-        url = soup.url.text
-        replacer = soup.replacer.text
+
+        # 예외처리 추가
+        # try:
+        #     url = soup.url.text
+        #     replacer = soup.replacer.text
+        # except AttributeError:
+        #     url = None
+        #     replacer = None
 
         return url, replacer
